@@ -1,0 +1,112 @@
+<%- include("../head") %>
+
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Main Speaker</th>
+                <th scope="col">Other Speakers</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% events.forEach(event => {%>
+            <tr>
+                <th scope="row"> <%- event._id %> </th>
+                <td><%- event.title %></td>
+                <td><%- moment(event.eventDate).utc().format('YYYY-MM-DD') %></td>
+                
+                <td><%- event.mainSpeaker ? event.mainSpeaker.firstName: "no main speaker" %></td>
+                <td>
+                    <% if (event.otherSpeakers[0]) { %>
+                    <ul>
+                        <% event.otherSpeakers.forEach(otherSpeaker => { %>
+                        <li> <%- otherSpeaker.firstName%> </li>
+                        <%});%>
+                    </ul>
+                    <%} else {%>
+                    no speakers
+                    <%} %>
+                </td>
+                <td> <button type="button" class="btn btn-info" onclick="getUpdateEvent(this,<%- event._id%>)" data-toggle="modal" data-target="#updateFormModal">Update</button>
+                </td>
+                <td> <button type="button" class="btn btn-danger" onclick="deleteEvent(this,<%- event._id%>)"> Delete
+                    </button> </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/event/updateEvents" method="post" class="text-center" id="updateEvent">
+                    <div class="row px-4 py-1">
+                        <div class="input-group col-sm-12 mb-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="id">id</label>
+                            </div>
+                            <input id="id" type="number" class="form-control" name="_id" readonly>
+                        </div>
+                    </div>
+                    <div class="row px-4 py-1">
+                        <div class="input-group col-sm-12 mb-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="title">Event title</label>
+                            </div>
+                            <input id="title" type="text" class="form-control" name="title">
+                        </div>
+                    </div>
+                    <div class="row px-4 py-1">
+                        <div class="input-group col-sm-12 mb-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="Date">Date</label>
+                            </div>
+                            <input id="Date" type="date" class="form-control" name="eventDate">
+                        </div>
+                    </div>
+                    <div class="row px-4 py-1">
+                        <div id="mainSpeakerWrapper" class="input-group col-sm-12 mb-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Main Speaker</label>
+                            </div>
+                            <select id="mainSpeaker" class="form-control" name="mainSpeaker">
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row px-4 py-1">
+                        <div class="input-group col-sm-12 mb-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="Other">Other Speakers</label>
+                            </div>
+                            <select id="otherSpeakers" class="custom-select" name="otherSpeakers" multiple>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                </form>
+            
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../scripts") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+<script src="/js/ajaxScript.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS (load bootstrap from a CDN) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<body class="container mt-4">
+    <h1>Registration From For Speakers</h1>
+    <form action="/register" method="post">
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label>firstName</label>
+                <input type="text" class="form-control" name="firstName" required>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>lastName</label>
+                <input type="text" class="form-control" name="lastName" required>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>userName</label>
+                <input type="text" class="form-control" name="userName" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label>password</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>re type password</label>
+                <input type="password" class="form-control" name="password2" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label>city</label>
+                <input type="text" class="form-control" name="Address.city" required>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>street</label>
+                <input type="number" class="form-control" name="Address.street" required>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>building</label>
+                <input type="number" class="form-control" name="Address.building" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h1 style="color:red;font-weight:bold;text-transform: uppercase;">
+        <% if (errMsg) { %>
+            <%= errMsg %> 
+        <% } %> 
+    </h1>
+
+    <%- include("../scripts") %>
+</body>
+
+</html>

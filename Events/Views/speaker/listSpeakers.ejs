@@ -1,0 +1,126 @@
+<%- include("../head") %>
+
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">City</th>
+                <th scope="col">Street</th>
+                <th scope="col">Building</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% speakers.forEach(element => {%>
+            <tr>
+                <th scope="row"> <%- element._id %> </th>
+                <td><%- element.firstName %></td>
+                <td><%- element.Address.city %></td>
+                <td><%- element.Address.street %></td>
+                <td><%- element.Address.building %></td>
+                <td> <button type="button" class="btn btn-info" data-target="#updateFormModal" data-toggle="modal"
+                        onclick="getUpdateSpeaker(this,<%- element._id%>)">Update</button> </td>
+                <td> <button type="button" class="btn btn-danger" onclick="deleteSpeaker(this,<%- element._id%>)">
+                        Delete </button> </td>
+                <!-- make method for delete sends element.id and remove the line on ajax success -->
+                <!-- function delete(event,id){$.ajax(){}} -->
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Update Speaker</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/speaker/updateSpeaker" method="post" class="text-center" id="updateSpeaker">
+                <div class="row px-4 py-1">
+                    <div class="input-group col-sm-12 mb-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">id</label>
+                        </div>
+                        <input id="id" type="number" class="form-control" name="_id" readonly>
+                    </div>
+                </div>
+                <div class="row px-4 py-1">
+                    <div class="input-group col-sm-12 mb-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">First Name</label>
+                        </div>
+                        <input id="fName" type="text" class="form-control" name="firstName">
+                    </div>
+                </div>
+                <div class="row px-4 py-1">
+                    <div class="input-group col-sm-12 mb-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Last Name</label>
+                        </div>
+                        <input id="lName" type="text" class="form-control" name="lastName">
+                    </div>
+                </div>
+                <!-- <div class="row px-4 py-1">
+                    <div id="mainSpeakerWrapper" class="input-group col-sm-12 mb-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">User Name</label>
+                        </div>
+                        <input id="uName" class="form-control" type="text" name="userName">
+                    </div>
+                </div> -->
+                <div class="row px-4 py-1">
+                    <div class="input-group col-sm-4">
+                        <div class="input-group-prepend">
+                            <label  class="input-group-text">City</label>
+                        </div>
+                        <input id="city" type="text" class="form-control" name="Address.city">
+                    </div>
+                    <div class="input-group col-sm-4">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Street</label>
+                        </div>
+                        <input id="street" type="number" class="form-control" name="Address.street">
+                    </div>
+                    <div class="input-group col-sm-4">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Building</label>
+                        </div>
+                        <input id="building" type="number" class="form-control" name="Address.building">
+                    </div>
+                </div>
+                <!-- <div class="row px-4 py-1">
+                    <div class="input-group col-sm-12 mb-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">New Password</label>
+                        </div>
+                        <input type="password" id="pass1" class="form-control" name="pass1">
+                    </div>
+                </div>
+                <div class="row px-4 py-1">
+                    <div class="input-group col-sm-12 mb-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Re Enter Ne Password</label>
+                        </div>
+                        <input type="password" id="pass2" class="form-control" name="pass2">
+                    </div>
+                </div> -->
+                <button type="submit" class="btn btn-primary mb-3">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../scripts") %>
+<script src="/js/ajaxScript.js"></script>
+</body>
+
+</html>
