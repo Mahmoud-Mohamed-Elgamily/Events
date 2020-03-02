@@ -15,7 +15,8 @@ let eventSchema = new mongoose.Schema({
         required: true
     },
     mainSpeaker: {type:Number,ref:"speakers",required:true},
-    otherSpeakers: [{type:Number,ref:"speakers"}]
+    otherSpeakers: [{type:Number,ref:"speakers"}],
+    status:String
 });
 
 eventSchema.plugin(autoIncrement.plugin, 'events');

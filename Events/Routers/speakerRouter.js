@@ -5,14 +5,19 @@ require("../Models/speakersModel");
 require("../Models/EventsModel");
 let speakerModel = moongose.model("speakers");
 let eventsModel = moongose.model("events");
+moongose.set('useFindAndModify',false)
 
-speakerR.get("/profile/:id?", (req, res) => {
+speakerR.get("/profile/:id?/:msg?", (req, res) => {
+    if (req.params.msg) 
+        msg = true
+    else
+        msg = false
     speakerModel.findById(req.params.id)
     .then((userData)=>{
         eventsModel.find({})
         .then((eventsData)=>{
             res.render("speaker/profile", {
-                userData,eventsData 
+                userData,eventsData,msg
             })
         })
         .catch((err) => {
@@ -26,11 +31,17 @@ speakerR.get("/profile/:id?", (req, res) => {
     });
 })
 
-speakerR.get('/decline/:id',(req,res)=>{
-    eventsModel.findById(req.params.id)
+speakerR.get('/decline/:eventId/:eventTitle/:userName/:role',(req,res)=>{
+    console.log(req.params);
+    
+    eventsModel.findByIdAndUpdate(req.params.eventId,
+        {status:`${req.params.userName} the ${req.params.role} at ${req.params.eventTitle} event 
+        <br>wants to decline the event 
+        <br>please contact him or remove the event`})
     .then((data)=>{
-        // send notification to the admin with this id 
-        res.send("success")
+        console.log(data);
+        
+        return res.redirect(`/speaker/profile/${req.session.userid}/true`)
     })
     .catch((err)=>{
         console.log("error msg " + err);

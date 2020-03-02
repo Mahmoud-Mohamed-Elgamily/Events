@@ -6,7 +6,10 @@ let speakerModel = moongose.model("speakers");
 let eventsModel = moongose.model("events");
 
 adminR.get("/profile/", (req, res) => {
-    res.render("admin/profile")
+    eventsModel.find({status: { $ne: null } })
+    .then((data)=>{
+        res.render("admin/profile",{data})
+    });
 });
 
 module.exports = adminR;

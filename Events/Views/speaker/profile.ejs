@@ -13,9 +13,9 @@
 </head>
 
 <body>
-    <div class="container mt-4">
+    <div class="container mt-4" >
         <h1 class="jumbotron">Welcome MR. <%- userData.firstName %> </h1>
-        <a href="/logout" class="btn btn-danger my-2 my-lg-0">Log out</a>
+        <a href="/logout" class="btn btn-danger logOut">Log out</a>
         <h2 class="pb-2 mt-4 mb-2 border-bottom">
             Up Coming Events
         </h2>
@@ -37,7 +37,7 @@
                             <td> <%= event.title %>  </td>
                             <td> Main Speaker </td>
                             <td> <%- moment(event.eventDate).utc().format('YYYY-MM-DD') %>  </td>
-                            <td><a href="/speaker/decline" class="btn btn-danger">Decline</a></td>
+                            <td><a href="/speaker/decline/<%- event._id %>/<%- event.title %>/<%- userData.userName%>/main speaker" class="btn btn-danger">Decline</a></td>
                         </tr>
                     <% } else if(event.otherSpeakers.includes(userData._id)) { %>
                         <tr>
@@ -46,11 +46,20 @@
                             <td> Secondary Speaker </td>
                             <td> <%- moment(event.eventDate).utc().format('YYYY-MM-DD') %></td>
                             <!-- handle the a behaviour using ajax call -->
-                            <td><a href="/speaker/decline" class="btn btn-danger">Decline</a></td>
+                            <td><a href="/speaker/decline/<%- event._id %>/<%- event.title %>/<%- userData.userName%>/secondary speaker " class="btn btn-danger">Decline</a></td>
                         </tr>
                     <% } %>
                 <% }) %>
         </table>
+        <h1>
+            <% if (msg) { %> 
+                <script> 
+                    window.onload = ()=>{
+                        alert("admin will check and contact with you soon")                         
+                    }
+                </script>
+            <% } %>
+        </h1>
     </div>
 
     <%- include("../scripts") %>
